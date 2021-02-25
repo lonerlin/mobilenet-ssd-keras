@@ -30,7 +30,7 @@ if __name__ == "__main__":
     #   训练之前一定要修改NUM_CLASSES
     #   修改成所需要区分的类的个数+1。
     #----------------------------------------------------#
-    NUM_CLASSES = 21
+    NUM_CLASSES = 4
     #----------------------------------------------------#
     #   input_shape有两个选择。
     #   一个是(300, 300, 3)、一个是(512, 512, 3)。
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     np.random.seed(None)
     num_val = int(len(lines)*val_split)
     num_train = len(lines) - num_val
-    
+    print("num_val:%d,num_train:%d", num_val, num_train)
     #------------------------------------------------------#
     #   主干特征提取网络特征通用，冻结训练可以加快训练速度
     #   也可以在训练初期防止权值被破坏。
@@ -127,7 +127,7 @@ if __name__ == "__main__":
         gen = Generator(bbox_util, BATCH_SIZE, lines[:num_train], lines[num_train:],
                         (input_shape[0], input_shape[1]),NUM_CLASSES)
 
-        model.compile(optimizer=Adam(lr=learning_rate_base),loss=MultiboxLoss(NUM_CLASSES, neg_pos_ratio=3.0).compute_loss)
+        model.compile(optimizer=Adam(lr=learning_rate_base), loss=MultiboxLoss(NUM_CLASSES, neg_pos_ratio=3.0).compute_loss)
         model.fit_generator(gen.generate(True), 
                 steps_per_epoch=num_train//BATCH_SIZE,
                 validation_data=gen.generate(False),
@@ -135,3 +135,4 @@ if __name__ == "__main__":
                 epochs=Epoch, 
                 initial_epoch=Freeze_epoch,
                 callbacks=[logging, checkpoint, reduce_lr, early_stopping])
+    model.save_weights(log_dir + 'last1.h5')

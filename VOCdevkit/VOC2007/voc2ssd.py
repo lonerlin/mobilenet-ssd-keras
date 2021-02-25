@@ -6,15 +6,15 @@ import os
 import random 
 random.seed(0)
 
-xmlfilepath=r'./VOCdevkit/VOC2007/Annotations'
-saveBasePath=r"./VOCdevkit/VOC2007/ImageSets/Main/"
- 
+xmlfilepath = r'Annotations/'
+saveBasePath = r"ImageSets/Main/"
+
 #----------------------------------------------------------------------#
 #   想要增加测试集修改trainval_percent
 #   train_percent不需要修改
 #----------------------------------------------------------------------#
-trainval_percent=1
-train_percent=1
+trainval_percent = 1
+train_percent = 1
 
 temp_xml = os.listdir(xmlfilepath)
 total_xml = []
@@ -22,32 +22,68 @@ for xml in temp_xml:
     if xml.endswith(".xml"):
         total_xml.append(xml)
 
-num=len(total_xml)  
-list=range(num)  
-tv=int(num*trainval_percent)  
-tr=int(tv*train_percent)  
-trainval= random.sample(list,tv)  
-train=random.sample(trainval,tr)  
- 
-print("train and val size",tv)
-print("traub suze",tr)
-ftrainval = open(os.path.join(saveBasePath,'trainval.txt'), 'w')  
-ftest = open(os.path.join(saveBasePath,'test.txt'), 'w')  
-ftrain = open(os.path.join(saveBasePath,'train.txt'), 'w')  
-fval = open(os.path.join(saveBasePath,'val.txt'), 'w')  
- 
-for i  in list:  
-    name=total_xml[i][:-4]+'\n'  
-    if i in trainval:  
-        ftrainval.write(name)  
-        if i in train:  
-            ftrain.write(name)  
-        else:  
-            fval.write(name)  
-    else:  
-        ftest.write(name)  
-  
-ftrainval.close()  
-ftrain.close()  
-fval.close()  
+num = len(total_xml)
+list = range(num)
+tv = int(num*trainval_percent)
+tr = int(tv*train_percent)
+trainval = random.sample(list, tv)
+train = random.sample(trainval, tr)
+
+print("train and val size", tv)
+print("traub suze", tr)
+ftrainval = open(os.path.join(saveBasePath, 'trainval.txt'), 'w')
+ftest = open(os.path.join(saveBasePath, 'test.txt'), 'w')
+ftrain = open(os.path.join(saveBasePath, 'train.txt'), 'w')
+fval = open(os.path.join(saveBasePath, 'val.txt'), 'w')
+
+for i in list:
+    name = total_xml[i][:-4]+'\n'
+    if i in trainval:
+        ftrainval.write(name)
+        if i in train:
+            ftrain.write(name)
+        else:
+            fval.write(name)
+    else:
+        ftest.write(name)
+
+ftrainval.close()
+ftrain.close()
+fval.close()
 ftest .close()
+# import os
+# import random
+#
+# trainval_percent = 0.2 #测试集占0.2
+# train_percent = 0.8    #训练集占0.8
+# xmlfilepath = 'Annotations'
+# txtsavepath = 'ImageSets\Main'
+# total_xml = os.listdir(xmlfilepath)
+#
+# num = len(total_xml)
+# list = range(num)
+# tv = int(num * trainval_percent)
+# tr = int(tv * train_percent)
+# trainval = random.sample(list, tv)
+# train = random.sample(trainval, tr)
+#
+# ftrainval = open('ImageSets/Main/trainval.txt', 'w')
+# ftest = open('ImageSets/Main/test.txt', 'w')
+# ftrain = open('ImageSets/Main/train.txt', 'w')
+# fval = open('ImageSets/Main/val.txt', 'w')
+#
+# for i in list:
+#     name = total_xml[i][:-4] + '\n'
+#     if i in trainval:
+#         ftrainval.write(name)
+#         if i in train:
+#             ftest.write(name)
+#         else:
+#             fval.write(name)
+#     else:
+#         ftrain.write(name)
+#
+# ftrainval.close()
+# ftrain.close()
+# fval.close()
+# ftest.close()

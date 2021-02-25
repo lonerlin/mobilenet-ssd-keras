@@ -21,7 +21,8 @@ from utils.utils import BBoxUtility, letterbox_image, ssd_correct_boxes
 #--------------------------------------------#
 class SSD(object):
     _defaults = {
-        "model_path"        : 'model_data/mobilenet_ssd_weights.h5',
+       # "model_path"        : 'model_data/mobilenet_ssd_weights.h5',
+        "model_path": 'model_data/last1.h5',
         "classes_path"      : 'model_data/voc_classes.txt',
         "input_shape"       : (300, 300, 3),
         "confidence"        : 0.4,
